@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trident Movers Kenya</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#FBF8F0;color:#1A2B22;}
+
+  /* NAV */
+  nav{background:#0F3D2E;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.15);}
+  .nav-brand{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
+  .nav-brand span{color:#F8D77E;font-size:18px;font-weight:700;letter-spacing:0.3px;}
+  .nav-links{display:flex;gap:6px;align-items:center;}
+  .nav-links button{background:none;border:none;color:#BFD8C9;font-size:14px;padding:8px 16px;border-radius:20px;cursor:pointer;font-family:inherit;transition:all 0.15s;}
+  .nav-links button:hover{color:#F8D77E;background:rgba(248,215,126,0.1);}
+  .nav-links button.active{background:#F8D77E;color:#0F3D2E;font-weight:600;}
+  .nav-admin{background:none;border:1px solid rgba(248,215,126,0.4);color:#F8D77E;font-size:13px;padding:6px 14px;border-radius:20px;cursor:pointer;font-family:inherit;transition:all 0.15s;margin-left:8px;}
+  .nav-admin:hover{background:#F8D77E;color:#0F3D2E;}
+
+  /* PAGES */
+  .page{display:none;}
+  .page.active{display:block;}
+
+  /* HERO */
+  .hero{background:linear-gradient(160deg,#0F3D2E 60%,#1A5C42);text-align:center;padding:5rem 1.5rem 4.5rem;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(248,215,126,0.06) 0%,transparent 70%);}
+  .hero svg{display:block;margin:0 auto 1.5rem;position:relative;z-index:1;}
+  .hero h1{font-size:42px;font-weight:700;color:#F8D77E;margin-bottom:10px;letter-spacing:0.5px;position:relative;z-index:1;}
+  .hero p.tagline{font-size:20px;color:#FDF8E8;margin-bottom:36px;position:relative;z-index:1;}
+  .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+  .btn-gold{background:linear-gradient(180deg,#F8D77E,#D9A027);border:none;color:#3D2A06;font-weight:700;font-size:15px;padding:14px 28px;border-radius:8px;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;font-family:inherit;}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(217,160,39,0.45);}
+  .btn-outline{background:none;border:2px solid rgba(248,215,126,0.5);color:#F8D77E;font-weight:600;font-size:15px;padding:13px 28px;border-radius:8px;cursor:pointer;transition:all 0.15s;font-family:inherit;}
+  .btn-outline:hover{border-color:#F8D77E;background:rgba(248,215,126,0.08);}
+  .hero p.subtext{font-size:13px;color:#8FB3A0;margin-top:20px;position:relative;z-index:1;}
+
+  /* TRUST BAR */
+  .trust-bar{background:#fff;border-bottom:1px solid #E5E0D0;padding:14px 0;}
+  .trust-inner{max-width:960px;margin:0 auto;padding:0 1.5rem;display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;}
+  .trust-item{display:flex;align-items:center;gap:7px;font-size:13px;color:#5A6B5E;font-weight:500;}
+  .trust-item span.ico{font-size:16px;}
+
+  /* CONTAINER & SECTIONS */
+  .container{max-width:960px;margin:0 auto;padding:0 1.5rem;}
+  section{padding:4rem 0;}
+  .section-title{font-size:28px;font-weight:700;text-align:center;margin-bottom:8px;color:#0F3D2E;}
+  .section-subtitle{font-size:15px;color:#5A6B5E;text-align:center;max-width:520px;margin:0 auto 2.5rem;line-height:1.7;}
+
+  /* SERVICES */
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;}
+  .service-card{background:#fff;border:1px solid #E5E0D0;border-radius:14px;padding:1.5rem;transition:transform 0.15s,box-shadow 0.15s;}
+  .service-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(15,61,46,0.1);}
+  .icon-badge{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#0F3D2E,#1A5C42);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:22px;}
+  .service-card h3{font-size:15px;font-weight:600;margin-bottom:6px;color:#0F3D2E;}
+  .service-card p{font-size:13px;color:#5A6B5E;line-height:1.6;}
+
+  /* WHY */
+  .why-section{background:#F1EDE0;}
+  .why-intro{text-align:center;margin-bottom:2.5rem;}
+  .why-intro p.lead{font-size:20px;font-weight:700;margin-bottom:10px;color:#0F3D2E;}
+  .why-intro p.desc{font-size:14.5px;color:#5A6B5E;max-width:580px;margin:0 auto;line-height:1.85;}
+  .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+  .why-card{background:#fff;border-radius:14px;padding:1.5rem 1.25rem;text-align:center;border:1px solid #E5E0D0;}
+  .why-card .why-icon{font-size:28px;margin-bottom:10px;}
+  .why-card h4{font-size:15px;font-weight:600;margin-bottom:6px;color:#0F3D2E;}
+  .why-card p{font-size:13px;color:#5A6B5E;line-height:1.6;}
+
+  /* HOW IT WORKS */
+  .how-section{background:#0F3D2E;}
+  .how-section .section-title{color:#F8D77E;}
+  .how-section .section-subtitle{color:#8FB3A0;}
+  .steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+  .steps-row::before{content:'';position:absolute;top:27px;left:calc(12.5% + 8px);right:calc(12.5% + 8px);height:2px;background:linear-gradient(90deg,#D9A027,#F8D77E,#D9A027);z-index:0;}
+  .step{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 12px;position:relative;z-index:1;}
+  .step-number{width:54px;height:54px;border-radius:50%;background:linear-gradient(180deg,#F8D77E,#D9A027);color:#3D2A06;font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:16px;box-shadow:0 4px 14px rgba(217,160,39,0.5);}
+  .step h4{font-size:15px;font-weight:600;color:#F8D77E;margin-bottom:6px;}
+  .step p{font-size:13px;color:#8FB3A0;line-height:1.65;}
+
+  /* TESTIMONIALS */
+  .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+  .testimonial-card{background:#fff;border:1px solid #E5E0D0;border-radius:14px;padding:1.5rem;display:flex;flex-direction:column;gap:12px;transition:transform 0.15s,box-shadow 0.15s;}
+  .testimonial-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(15,61,46,0.1);}
+  .stars{color:#D9A027;font-size:17px;letter-spacing:3px;}
+  .testimonial-text{font-size:14px;color:#3A4A3E;line-height:1.8;flex:1;}
+  .testimonial-author{display:flex;align-items:center;gap:10px;}
+  .author-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#0F3D2E,#1A5C42);color:#F8D77E;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .author-name{font-size:14px;font-weight:600;color:#1A2B22;margin:0;}
+  .author-title{font-size:12px;color:#5A6B5E;margin:0;}
+
+  /* QUOTE PAGE */
+  #page-quote{background:#F1EDE0;}
+  .quote-wrap{max-width:620px;margin:0 auto;padding:3rem 1.5rem;}
+  .card{background:#fff;border:1px solid #E5E0D0;border-radius:14px;padding:1.5rem;margin-bottom:16px;}
+  .card-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.9px;color:#0F3D2E;margin-bottom:14px;}
+  label{font-size:13px;color:#5A6B5E;display:block;margin-bottom:4px;font-weight:500;}
+  input[type=text],input[type=number],input[type=date],input[type=email],input[type=tel],select,textarea{width:100%;padding:10px 12px;border:1px solid #E0DBC8;border-radius:8px;font-size:14px;font-family:inherit;background:#FBF8F0;color:#1A2B22;margin-bottom:12px;transition:border-color 0.15s;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:#D9A027;background:#fff;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  .pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px;}
+  .pill{display:flex;align-items:center;gap:6px;font-size:13px;background:#F1EDE0;padding:7px 13px;border-radius:20px;cursor:pointer;transition:all 0.15s;border:1px solid transparent;}
+  .pill input{width:auto;margin:0;accent-color:#0F3D2E;}
+  .pill:has(input:checked){background:#0F3D2E;color:#F8D77E;border-color:#0F3D2E;}
+  .qty-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #F1EDE0;}
+  .qty-row:last-child{border-bottom:none;}
+  .qty-label{font-size:14px;color:#1A2B22;font-weight:500;}
+  .qty-price{font-size:12px;color:#5A6B5E;margin-top:2px;}
+  .qty-ctrl{display:flex;align-items:center;gap:12px;}
+  .qty-btn{width:30px;height:30px;border-radius:50%;border:1px solid #E0DBC8;background:#FBF8F0;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:all 0.15s;font-family:inherit;}
+  .qty-btn:hover{background:#0F3D2E;color:#F8D77E;border-color:#0F3D2E;}
+  .qty-val{font-size:16px;font-weight:700;min-width:22px;text-align:center;}
+  .quote-box{background:linear-gradient(135deg,#0F3D2E,#1A5C42);border-radius:14px;padding:1.75rem;color:#fff;margin-bottom:16px;display:none;}
+  .quote-box.show{display:block;}
+  .quote-box h3{color:#F8D77E;font-size:18px;margin-bottom:18px;font-weight:700;}
+  .quote-line{display:flex;justify-content:space-between;font-size:14px;color:#BFD8C9;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.08);}
+  .quote-line:last-of-type{border-bottom:none;}
+  .quote-line.total{color:#F8D77E;font-weight:700;font-size:17px;margin-top:10px;padding-top:14px;border-top:2px solid rgba(248,215,126,0.3);}
+  .quote-note{font-size:12px;color:#8FB3A0;margin-top:14px;line-height:1.7;background:rgba(0,0,0,0.15);padding:10px 12px;border-radius:8px;}
+  .btn-submit{width:100%;background:linear-gradient(180deg,#F8D77E,#D9A027);border:none;color:#3D2A06;font-weight:700;font-size:15px;padding:14px;border-radius:8px;cursor:pointer;margin-bottom:10px;font-family:inherit;transition:opacity 0.15s;}
+  .btn-submit:hover{opacity:0.9;}
+  .btn-wa-inline{width:100%;background:#25D366;border:none;color:#fff;font-weight:700;font-size:15px;padding:14px;border-radius:8px;cursor:pointer;display:none;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-family:inherit;margin-bottom:16px;}
+  .btn-wa-inline:hover{background:#1ebe5d;}
+
+  /* CONTACT PAGE */
+  #page-contact{background:#FBF8F0;}
+  .contact-wrap{max-width:780px;margin:0 auto;padding:3rem 1.5rem;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:2rem;}
+  .contact-card{background:#fff;border:1px solid #E5E0D0;border-radius:14px;padding:1.5rem;}
+  .contact-card h3{font-size:15px;font-weight:700;color:#0F3D2E;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .contact-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F1EDE0;text-decoration:none;color:#1A2B22;font-size:14px;transition:color 0.15s;}
+  .contact-item:last-child{border-bottom:none;}
+  .contact-item:hover{color:#0F3D2E;}
+  .contact-item .ico{font-size:18px;width:26px;text-align:center;}
+  .contact-item .wa-badge{background:#25D366;color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:10px;margin-left:auto;}
+  .contact-form-card{background:#fff;border:1px solid #E5E0D0;border-radius:14px;padding:1.75rem;}
+  .contact-form-card h3{font-size:18px;font-weight:700;color:#0F3D2E;margin-bottom:6px;}
+  .contact-form-card p{font-size:13.5px;color:#5A6B5E;margin-bottom:20px;}
+  .form-msg{display:none;padding:12px;border-radius:8px;font-size:14px;margin-top:10px;text-align:center;}
+  .form-msg.success{background:#e8faf0;color:#128C50;}
+  .form-msg.error{background:#fef0f0;color:#c0392b;}
+
+  /* DIVIDER */
+  .divider{display:flex;align-items:center;gap:10px;margin:16px 0;}
+  .divider .line{flex:1;height:1px;background:#E5E0D0;}
+  .divider span{font-size:12px;color:#9A9580;}
+
+  /* CTA BANNER */
+  .cta-banner{background:linear-gradient(135deg,#0F3D2E,#1A5C42);padding:3.5rem 1.5rem;text-align:center;}
+  .cta-banner h2{color:#F8D77E;font-size:26px;font-weight:700;margin-bottom:10px;}
+  .cta-banner p{color:#BFD8C9;font-size:15px;margin-bottom:28px;}
+
+  /* WHATSAPP FLOAT */
+  .whatsapp-float{position:fixed;bottom:28px;right:28px;z-index:999;display:flex;align-items:center;gap:10px;background:#25D366;color:#fff;font-size:14px;font-weight:700;padding:12px 18px 12px 14px;border-radius:50px;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,0.45);transition:transform 0.15s,box-shadow 0.15s;}
+  .whatsapp-float:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(37,211,102,0.55);}
+
+  /* ADMIN */
+  #admin-panel{display:none;background:#FBF8F0;min-height:100vh;padding:2rem 1.5rem;}
+  .admin-wrap{max-width:780px;margin:0 auto;}
+  .admin-section-hdr{background:#1A2B22;color:#F8D77E;padding:12px 16px;border-radius:10px 10px 0 0;font-weight:700;font-size:14px;margin-top:12px;}
+  .admin-body{background:#fff;border:1px solid #E5E0D0;border-top:none;border-radius:0 0 10px 10px;padding:1.25rem;}
+  .admin-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
+  .save-btn{background:#0F3D2E;color:#F8D77E;border:none;padding:12px 28px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;margin-top:16px;font-family:inherit;}
+  .save-btn:hover{background:#16513E;}
+  .saved-msg{color:#25a244;font-size:13px;margin-left:10px;display:none;}
+
+  /* LOGIN MODAL */
+  #login-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center;}
+  #login-modal.show{display:flex;}
+  .modal-box{background:#fff;border-radius:16px;padding:2rem;width:320px;box-shadow:0 20px 60px rgba(0,0,0,0.2);}
+  .modal-box h3{font-size:18px;font-weight:700;margin-bottom:6px;color:#0F3D2E;}
+  .modal-box p{font-size:13px;color:#5A6B5E;margin-bottom:16px;}
+  .modal-err{color:#c0392b;font-size:13px;margin-bottom:8px;display:none;}
+
+  /* FOOTER */
+  footer{background:#0B2E22;color:#BFD8C9;padding:3rem 1.5rem 1.5rem;font-size:13px;}
+  .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem;max-width:960px;margin:0 auto 2.5rem;}
+  .footer-brand h3{color:#F8D77E;font-size:18px;font-weight:700;margin-bottom:8px;}
+  .footer-brand p{color:#8FB3A0;line-height:1.75;font-size:13.5px;}
+  .footer-col h4{color:#F8D77E;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.9px;margin-bottom:12px;}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .footer-col ul li a{color:#8FB3A0;text-decoration:none;font-size:13.5px;transition:color 0.15s;}
+  .footer-col ul li a:hover{color:#F8D77E;}
+  .footer-col ul li span{color:#8FB3A0;font-size:13.5px;}
+  .footer-bottom{max-width:960px;margin:0 auto;padding-top:1.5rem;border-top:1px solid #1A4D38;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+  .footer-bottom p{color:#5A7A6A;font-size:12.5px;}
+  .footer-bottom a{color:#5A7A6A;text-decoration:none;}
+  .footer-bottom a:hover{color:#F8D77E;}
+
+  @media(max-width:640px){
+    .row,.row-3,.admin-row,.contact-grid{grid-template-columns:1fr;}
+    .steps-row{grid-template-columns:1fr 1fr;gap:24px;}
+    .steps-row::before{display:none;}
+    .footer-grid{grid-template-columns:1fr;gap:1.5rem;}
+    .hero h1{font-size:30px;}
+    .nav-links button span.label{display:none;}
+    .trust-inner{gap:1rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" onclick="showPage('home')">
+    <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ng1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FCE8AE"/><stop offset="40%" stop-color="#E8B638"/><stop offset="100%" stop-color="#9C7212"/></linearGradient>
+        <linearGradient id="ng2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FFF6DC" stop-opacity="0.85"/><stop offset="100%" stop-color="#FFF6DC" stop-opacity="0"/></linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="48" fill="#0B2E22" stroke="url(#ng1)" stroke-width="2.5"/>
+      <g transform="translate(50,52)">
+        <rect x="-3" y="-30" width="6" height="46" rx="2.5" fill="url(#ng1)"/>
+        <rect x="-3" y="-30" width="2.4" height="46" rx="1" fill="url(#ng2)" opacity="0.6"/>
+        <path d="M -19 -33 Q -21 -18 -10 -6 Q -6 -2 -3 2 L -3 -14 Q -10 -19 -10 -33 Z" fill="url(#ng1)"/>
+        <path d="M 19 -33 Q 21 -18 10 -6 Q 6 -2 3 2 L 3 -14 Q 10 -19 10 -33 Z" fill="url(#ng1)"/>
+        <path d="M -4 -33 L -4 0 L 4 0 L 4 -33 Z" fill="url(#ng1)"/>
+        <ellipse cx="-19.5" cy="-34" rx="3" ry="3.2" fill="#FCE8AE"/>
+        <ellipse cx="0" cy="-35" rx="3.2" ry="3.4" fill="#FCE8AE"/>
+        <ellipse cx="19.5" cy="-34" rx="3" ry="3.2" fill="#FCE8AE"/>
+        <rect x="-13" y="6" width="26" height="5" rx="2" fill="url(#ng1)"/>
+      </g>
+    </svg>
+    <span>Trident Movers</span>
+  </a>
+  <div class="nav-links">
+    <button id="nav-home" onclick="showPage('home')" class="active"><span class="label">Home</span></button>
+    <button id="nav-quote" onclick="showPage('quote')"><span class="label">Get a Quote</span></button>
+    <button id="nav-contact" onclick="showPage('contact')"><span class="label">Contact</span></button>
+    <button class="nav-admin" onclick="openAdmin()">Admin</button>
+  </div>
+</nav>
+
+<!-- LOGIN MODAL -->
+<div id="login-modal">
+  <div class="modal-box">
+    <h3>🔒 Admin Login</h3>
+    <p>Enter your admin password to access rate settings.</p>
+    <label>Password</label>
+    <input type="password" id="admin-pass" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkLogin()" />
+    <p class="modal-err" id="login-err">Incorrect password. Try again.</p>
+    <button class="btn-submit" onclick="checkLogin()" style="margin-top:4px;">Login</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════ HOME PAGE ═══════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <svg width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FCE8AE"/><stop offset="40%" stop-color="#E8B638"/><stop offset="100%" stop-color="#9C7212"/></linearGradient>
+        <linearGradient id="hg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FFF6DC" stop-opacity="0.85"/><stop offset="100%" stop-color="#FFF6DC" stop-opacity="0"/></linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="48" fill="#0B2E22" stroke="url(#hg1)" stroke-width="2.5"/>
+      <g transform="translate(50,52)">
+        <rect x="-3" y="-30" width="6" height="46" rx="2.5" fill="url(#hg1)"/>
+        <rect x="-3" y="-30" width="2.4" height="46" rx="1" fill="url(#hg2)" opacity="0.6"/>
+        <path d="M -19 -33 Q -21 -18 -10 -6 Q -6 -2 -3 2 L -3 -14 Q -10 -19 -10 -33 Z" fill="url(#hg1)"/>
+        <path d="M 19 -33 Q 21 -18 10 -6 Q 6 -2 3 2 L 3 -14 Q 10 -19 10 -33 Z" fill="url(#hg1)"/>
+        <path d="M -4 -33 L -4 0 L 4 0 L 4 -33 Z" fill="url(#hg1)"/>
+        <path d="M -1.2 -33 L -1.2 -2 L 1.2 -2 L 1.2 -33 Z" fill="url(#hg2)" opacity="0.7"/>
+        <ellipse cx="-19.5" cy="-34" rx="3" ry="3.2" fill="#FCE8AE"/>
+        <ellipse cx="0" cy="-35" rx="3.2" ry="3.4" fill="#FCE8AE"/>
+        <ellipse cx="19.5" cy="-34" rx="3" ry="3.2" fill="#FCE8AE"/>
+        <rect x="-13" y="6" width="26" height="5" rx="2" fill="url(#hg1)"/>
+      </g>
+    </svg>
+    <h1>Trident Movers Kenya</h1>
+    <p class="tagline">Move with ease of mind</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="showPage('quote')">Get a free quote</button>
+      <button class="btn-outline" onclick="showPage('contact')">Contact us</button>
+    </div>
+    <p class="subtext">Local & countrywide moves · 7 years experience · Trusted by hundreds</p>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <div class="trust-item"><span class="ico">✅</span>Licensed & insured</div>
+      <div class="trust-item"><span class="ico">📅</span>7 years experience</div>
+      <div class="trust-item"><span class="ico">🇰🇪</span>Countrywide coverage</div>
+      <div class="trust-item"><span class="ico">💬</span>WhatsApp-first support</div>
+      <div class="trust-item"><span class="ico">⭐</span>5-star rated</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section>
+    <div class="container">
+      <p class="section-title">Our services</p>
+      <p class="section-subtitle">Everything you need for a smooth move, all under one roof.</p>
+      <div class="services-grid">
+        <div class="service-card"><div class="icon-badge">📦</div><h3>Packing & unpacking</h3><p>We carefully pack your belongings and unpack them at your new place, room by room.</p></div>
+        <div class="service-card"><div class="icon-badge">🚚</div><h3>Loading & transport</h3><p>Safe loading and a smooth ride to your new home, on time and on schedule.</p></div>
+        <div class="service-card"><div class="icon-badge">🛡️</div><h3>Furniture protection</h3><p>Blankets, wrap, and padding keep your furniture and floors scratch-free.</p></div>
+        <div class="service-card"><div class="icon-badge">🔧</div><h3>Disassembly & reassembly</h3><p>Beds, shelves, and tables taken apart and rebuilt so you don't have to.</p></div>
+        <div class="service-card"><div class="icon-badge">📍</div><h3>Drop-offs</h3><p>Donations, storage, or a second stop — we'll handle the extra trip.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-section">
+    <div class="container">
+      <div class="why-intro">
+        <p class="lead">Looking for a reliable moving team?</p>
+        <p class="desc">With 7 years of industry experience, we provide professional, efficient, and careful moving services you can trust. Our highly skilled crew handles all items — from fragile valuables to heavy furniture — with the utmost care. We use clean, dependable transportation and have a dedicated team leader on standby to quickly resolve any issues that may arise.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card"><div class="why-icon">📅</div><h4>7 years experience</h4><p>A proven track record in the moving industry.</p></div>
+        <div class="why-card"><div class="why-icon">🤲</div><h4>Careful with everything</h4><p>From fragile valuables to heavy furniture, handled with care.</p></div>
+        <div class="why-card"><div class="why-icon">🚛</div><h4>Dependable transport</h4><p>Clean, reliable vehicles for every move.</p></div>
+        <div class="why-card"><div class="why-icon">🎧</div><h4>Team leader on standby</h4><p>Quick to step in and resolve anything that comes up.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="container">
+      <p class="section-title">How it works</p>
+      <p class="section-subtitle">Simple, transparent, and stress-free — every step of the way.</p>
+      <div class="steps-row">
+        <div class="step"><div class="step-number">1</div><h4>Call or get a quote</h4><p>Reach out via the form or give us a call. We'll get back to you quickly.</p></div>
+        <div class="step"><div class="step-number">2</div><h4>Site visit & assessment</h4><p>We visit your home, assess the scope, and give you a firm transparent quote.</p></div>
+        <div class="step"><div class="step-number">3</div><h4>Moving day</h4><p>Our crew arrives on time and gets you settled at your new place with care.</p></div>
+        <div class="step"><div class="step-number">4</div><h4>Aftercare</h4><p>We follow up to make sure everything arrived perfectly and you're satisfied.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="container">
+      <p class="section-title">What our customers say</p>
+      <p class="section-subtitle">Real moves, real people, real results.</p>
+      <div class="testimonials-grid">
+        <div class="testimonial-card"><div class="stars">★★★★★</div><p class="testimonial-text">"Trident moved our entire office over a weekend. Not a single item damaged, and the team was incredibly professional. Highly recommend."</p><div class="testimonial-author"><div class="author-avatar">JM</div><div><p class="author-name">James M.</p><p class="author-title">Nairobi Business Owner</p></div></div></div>
+        <div class="testimonial-card"><div class="stars">★★★★★</div><p class="testimonial-text">"I was dreading my move from Karen to Mombasa. Trident made it feel effortless. Worth every shilling."</p><div class="testimonial-author"><div class="author-avatar">AW</div><div><p class="author-name">Aisha W.</p><p class="author-title">Homeowner</p></div></div></div>
+        <div class="testimonial-card"><div class="stars">★★★★★</div><p class="testimonial-text">"Quick quote, fair price, no drama. These guys are the real deal."</p><div class="testimonial-author"><div class="author-avatar">BO</div><div><p class="author-name">Brian O.</p><p class="author-title">Westlands</p></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <h2>Ready to move?</h2>
+    <p>Get your instant quote in under 2 minutes — no obligation, no hidden fees.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-gold" onclick="showPage('quote')">Get a free quote</button>
+      <a href="https://wa.me/254735393874?text=Hi%20Trident%20Movers%2C%20I%27d%20like%20a%20quote." target="_blank" style="display:flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-weight:700;font-size:15px;padding:14px 24px;border-radius:8px;text-decoration:none;">
+        <svg width="18" height="18" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.492.649 4.831 1.785 6.865L2 30l7.34-1.763A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff" fill-opacity=".2"/><path d="M22 19.4c-.3-.15-1.82-.9-2.1-1-.28-.1-.49-.15-.69.15-.2.3-.8 1-.97 1.2-.18.2-.36.23-.67.08-.3-.15-1.3-.48-2.47-1.52-.91-.81-1.53-1.82-1.7-2.12-.18-.31-.02-.47.13-.63.14-.14.3-.36.46-.54.15-.18.2-.3.3-.51.1-.2.05-.38-.02-.54-.08-.15-.69-1.66-.95-2.28-.25-.6-.5-.52-.69-.53l-.59-.01c-.2 0-.54.08-.82.38-.28.31-1.07 1.05-1.07 2.56s1.1 2.97 1.25 3.18c.15.2 2.17 3.31 5.25 4.64.73.31 1.3.5 1.75.65.74.23 1.41.2 1.94.12.59-.09 1.82-.74 2.07-1.46.26-.72.26-1.33.18-1.46-.08-.13-.28-.2-.59-.36z" fill="#fff"/></svg>
+        WhatsApp us
+      </a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><h3>🔱 Trident Movers Kenya</h3><p>Professional, efficient, and careful moving services you can trust — countrywide. Move with ease of mind.</p></div>
+      <div class="footer-col"><h4>Quick links</h4><ul>
+        <li><a onclick="showPage('home')" href="#">Home</a></li>
+        <li><a onclick="showPage('quote')" href="#">Get a quote</a></li>
+        <li><a onclick="showPage('contact')" href="#">Contact us</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul>
+        <li><a href="https://wa.me/254735393874" target="_blank">WhatsApp us</a></li>
+        <li><a href="tel:+254735393874">+254 735 393874</a></li>
+        <li><a href="tel:+254716213834">+254 716 213834</a></li>
+        <li><a href="mailto:sales@tridentmoverskenya.com">sales@tridentmoverskenya.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Trident Movers Kenya. All rights reserved.</p>
+      <p><a href="#">tridentmoverskenya.com</a></p>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════ QUOTE PAGE ═══════════════════════ -->
+<div id="page-quote" class="page">
+  <div class="quote-wrap">
+    <h2 class="section-title" style="text-align:left;margin-bottom:4px;">Get an instant quote</h2>
+    <p style="font-size:14px;color:#5A6B5E;margin-bottom:24px;">Real-time estimate based on current fuel, labour & logistics rates.</p>
+
+    <div class="card">
+      <p class="card-title">Your details</p>
+      <div class="row">
+        <div><label>Full name</label><input type="text" id="f-name" placeholder="Jane Smith" /></div>
+        <div><label>Phone / WhatsApp</label><input type="tel" id="f-phone" placeholder="+254 7XX XXX XXX" /></div>
+      </div>
+      <div><label>Email (optional)</label><input type="email" id="f-email" placeholder="jane@email.com" /></div>
+      <div class="row">
+        <div><label>User type</label><select id="f-usertype"><option>Individual</option><option>Business</option></select></div>
+        <div><label>Move / delivery date</label><input type="date" id="f-date" /></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Job details</p>
+      <div><label>Pickup address</label><input type="text" id="f-from" placeholder="e.g. Karen, Nairobi" /></div>
+      <div><label>Dropoff address</label><input type="text" id="f-to" placeholder="e.g. Westlands, Nairobi" /></div>
+      <div class="row">
+        <div><label>Estimated distance (km)</label><input type="number" id="f-dist" placeholder="e.g. 12" min="1" /></div>
+        <div><label>Home / cargo size</label>
+          <select id="f-size">
+            <option value="studio">Studio / bedsitter</option>
+            <option value="1bed">1 bedroom</option>
+            <option value="2bed">2 bedrooms</option>
+            <option value="3bed">3 bedrooms</option>
+            <option value="4bed">4+ bedrooms</option>
+            <option value="office">Office / commercial</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div><label>Pickup floor</label><select id="f-pfloor"><option value="0">Ground floor</option><option value="1">1st floor</option><option value="2">2nd floor</option><option value="3">3rd floor+</option></select></div>
+        <div><label>Dropoff floor</label><select id="f-dfloor"><option value="0">Ground floor</option><option value="1">1st floor</option><option value="2">2nd floor</option><option value="3">3rd floor+</option></select></div>
+      </div>
+      <label>Elevator available?</label>
+      <div class="pills" style="margin-bottom:0">
+        <label class="pill"><input type="radio" name="elevator" value="yes" /> Yes</label>
+        <label class="pill"><input type="radio" name="elevator" value="no" checked /> No</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Special items</p>
+      <p style="font-size:13px;color:#5A6B5E;margin-bottom:10px;">Select any items needing extra care — these affect the quote.</p>
+      <div class="pills">
+        <label class="pill"><input type="checkbox" class="special" value="piano" /> 🎹 Piano</label>
+        <label class="pill"><input type="checkbox" class="special" value="safe" /> 🔒 Safe</label>
+        <label class="pill"><input type="checkbox" class="special" value="artwork" /> 🖼️ Fragile artwork</label>
+        <label class="pill"><input type="checkbox" class="special" value="gym" /> 🏋️ Gym equipment</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Mounting & fitting services</p>
+      <p style="font-size:13px;color:#5A6B5E;margin-bottom:14px;">Each service adds to your quote based on quantity.</p>
+      <div class="qty-row">
+        <div><div class="qty-label">📺 TV mounting</div><div class="qty-price">KSh 500–1,500 per TV</div></div>
+        <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('tv',-1)">−</button><span class="qty-val" id="qty-tv">0</span><button class="qty-btn" onclick="changeQty('tv',1)">+</button></div>
+      </div>
+      <div class="qty-row">
+        <div><div class="qty-label">🚿 Water heater installation</div><div class="qty-price">KSh 400 fixed per unit</div></div>
+        <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('heater',-1)">−</button><span class="qty-val" id="qty-heater">0</span><button class="qty-btn" onclick="changeQty('heater',1)">+</button></div>
+      </div>
+      <div class="qty-row">
+        <div><div class="qty-label">💡 Lighting fixtures</div><div class="qty-price">KSh 800–1,500 per fitting</div></div>
+        <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('light',-1)">−</button><span class="qty-val" id="qty-light">0</span><button class="qty-btn" onclick="changeQty('light',1)">+</button></div>
+      </div>
+      <div class="qty-row">
+        <div><div class="qty-label">🖼️ Artwork hanging</div><div class="qty-price">KSh 200–500 per piece</div></div>
+        <div class="qty-ctrl"><button class="qty-btn" onclick="changeQty('art',-1)">−</button><span class="qty-val" id="qty-art">0</span><button class="qty-btn" onclick="changeQty('art',1)">+</button></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Anything else?</p>
+      <textarea id="f-notes" rows="3" placeholder="Stairs, parking restrictions, narrow access, fragile items..."></textarea>
+    </div>
+
+    <button class="btn-submit" onclick="calcQuote()">Calculate my quote →</button>
+
+    <div class="quote-box" id="quote-result">
+      <h3>📋 Your estimate</h3>
+      <div id="quote-lines"></div>
+      <div class="quote-note">This is an estimate based on current labour, fuel and logistics rates. Final price confirmed after site assessment. Valid for 7 days.</div>
+    </div>
+
+    <a class="btn-wa-inline" id="wa-confirm-btn" href="#" target="_blank">
+      <svg width="20" height="20" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.492.649 4.831 1.785 6.865L2 30l7.34-1.763A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff" fill-opacity=".2"/><path d="M22 19.4c-.3-.15-1.82-.9-2.1-1-.28-.1-.49-.15-.69.15-.2.3-.8 1-.97 1.2-.18.2-.36.23-.67.08-.3-.15-1.3-.48-2.47-1.52-.91-.81-1.53-1.82-1.7-2.12-.18-.31-.02-.47.13-.63.14-.14.3-.36.46-.54.15-.18.2-.3.3-.51.1-.2.05-.38-.02-.54-.08-.15-.69-1.66-.95-2.28-.25-.6-.5-.52-.69-.53l-.59-.01c-.2 0-.54.08-.82.38-.28.31-1.07 1.05-1.07 2.56s1.1 2.97 1.25 3.18c.15.2 2.17 3.31 5.25 4.64.73.31 1.3.5 1.75.65.74.23 1.41.2 1.94.12.59-.09 1.82-.74 2.07-1.46.26-.72.26-1.33.18-1.46-.08-.13-.28-.2-.59-.36z" fill="#fff"/></svg>
+      Confirm booking via WhatsApp
+    </a>
+
+    <div class="divider"><div class="line"></div><span>or reach us directly</span><div class="line"></div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:2rem;">
+      <a href="https://wa.me/254735393874?text=Hi%20Trident%20Movers%2C%20I%27d%20like%20a%20quote." target="_blank" style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:#e8faf0;border:1px solid #25D366;border-radius:8px;color:#128C50;font-weight:600;font-size:14px;text-decoration:none;">💬 Chat on WhatsApp</a>
+      <a href="tel:+254735393874" style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:#fff;border:1px solid #E5E0D0;border-radius:8px;color:#1A2B22;font-size:14px;text-decoration:none;">📞 +254 735 393874</a>
+      <a href="tel:+254716213834" style="display:flex;align-items:center;gap:8px;padding:12px 16px;background:#fff;border:1px solid #E5E0D0;border-radius:8px;color:#1A2B22;font-size:14px;text-decoration:none;">📞 +254 716 213834</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ CONTACT PAGE ═══════════════════════ -->
+<div id="page-contact" class="page">
+  <div class="contact-wrap">
+    <h2 class="section-title" style="text-align:left;margin-bottom:4px;">Get in touch</h2>
+    <p style="font-size:14px;color:#5A6B5E;margin-bottom:28px;">We're quick to respond — especially on WhatsApp.</p>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>💬 WhatsApp & calls</h3>
+        <a href="https://wa.me/254735393874?text=Hi%20Trident%20Movers!" target="_blank" class="contact-item">
+          <span class="ico">💬</span> +254 735 393874
+          <span class="wa-badge">WhatsApp</span>
+        </a>
+        <a href="tel:+254735393874" class="contact-item"><span class="ico">📞</span> +254 735 393874</a>
+        <a href="tel:+254716213834" class="contact-item"><span class="ico">📞</span> +254 716 213834</a>
+        <a href="mailto:sales@tridentmoverskenya.com" class="contact-item"><span class="ico">✉️</span> sales@tridentmoverskenya.com</a>
+      </div>
+      <div class="contact-card">
+        <h3>📍 Service area</h3>
+        <div class="contact-item" style="flex-direction:column;align-items:flex-start;gap:6px;">
+          <span style="font-size:14px;color:#1A2B22;font-weight:500;">Countrywide, Kenya</span>
+          <span style="font-size:13px;color:#5A6B5E;line-height:1.7;">We operate across all 47 counties. Local and long-distance moves welcomed. Headquarters in Nairobi.</span>
+        </div>
+        <div class="contact-item" style="flex-direction:column;align-items:flex-start;gap:4px;margin-top:8px;">
+          <span style="font-size:13px;font-weight:600;color:#0F3D2E;">Business hours</span>
+          <span style="font-size:13px;color:#5A6B5E;">Mon – Sat: 7:00 AM – 7:00 PM</span>
+          <span style="font-size:13px;color:#5A6B5E;">Sun: By appointment</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-card">
+      <h3>Send us a message</h3>
+      <p>Not ready to call? Drop us a message and we'll get back to you within a few hours.</p>
+      <div class="row">
+        <div><label>Full name</label><input type="text" id="c-name" placeholder="Jane Smith" /></div>
+        <div><label>Phone / WhatsApp</label><input type="tel" id="c-phone" placeholder="+254 7XX XXX XXX" /></div>
+      </div>
+      <div><label>Email (optional)</label><input type="email" id="c-email" placeholder="jane@email.com" /></div>
+      <div><label>Subject</label>
+        <select id="c-subject">
+          <option>I'd like a quote</option>
+          <option>I want to book a move</option>
+          <option>Question about services</option>
+          <option>Follow-up on an existing booking</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div><label>Message</label><textarea id="c-message" rows="4" placeholder="Tell us what you need..."></textarea></div>
+      <button class="btn-submit" onclick="submitContact()">Send message</button>
+      <div class="form-msg" id="contact-msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div class="admin-wrap">
+    <h2 style="color:#0F3D2E;margin-bottom:4px;">⚙️ Admin — Rate Settings</h2>
+    <p style="font-size:14px;color:#5A6B5E;margin-bottom:1.5rem;">Update rates below. Changes apply instantly to all new quotes.</p>
+    <div class="admin-section-hdr">Base rates</div>
+    <div class="admin-body">
+      <div class="admin-row">
+        <div><label>Fuel cost per km (KSh)</label><input type="number" id="a-fuel" /></div>
+        <div><label>Labour wage per hour (KSh)</label><input type="number" id="a-wage" /></div>
+        <div><label>Floor surcharge per level (KSh)</label><input type="number" id="a-floor" /></div>
+        <div><label>No-elevator surcharge (KSh)</label><input type="number" id="a-noelev" /></div>
+      </div>
+    </div>
+    <div class="admin-section-hdr">Home size — base labour hours</div>
+    <div class="admin-body">
+      <div class="row-3">
+        <div><label>Studio (hrs)</label><input type="number" id="a-studio" /></div>
+        <div><label>1 bed (hrs)</label><input type="number" id="a-1bed" /></div>
+        <div><label>2 bed (hrs)</label><input type="number" id="a-2bed" /></div>
+        <div><label>3 bed (hrs)</label><input type="number" id="a-3bed" /></div>
+        <div><label>4+ bed (hrs)</label><input type="number" id="a-4bed" /></div>
+        <div><label>Office (hrs)</label><input type="number" id="a-office" /></div>
+      </div>
+    </div>
+    <div class="admin-section-hdr">Special item surcharges (KSh)</div>
+    <div class="admin-body">
+      <div class="admin-row">
+        <div><label>Piano min</label><input type="number" id="a-piano-min" /></div>
+        <div><label>Piano max</label><input type="number" id="a-piano-max" /></div>
+        <div><label>Safe min</label><input type="number" id="a-safe-min" /></div>
+        <div><label>Safe max</label><input type="number" id="a-safe-max" /></div>
+        <div><label>Fragile artwork min</label><input type="number" id="a-art-min" /></div>
+        <div><label>Fragile artwork max</label><input type="number" id="a-art-max" /></div>
+        <div><label>Gym equipment min</label><input type="number" id="a-gym-min" /></div>
+        <div><label>Gym equipment max</label><input type="number" id="a-gym-max" /></div>
+      </div>
+    </div>
+    <div class="admin-section-hdr">Mounting & fitting prices (KSh)</div>
+    <div class="admin-body">
+      <div class="admin-row">
+        <div><label>TV mounting min</label><input type="number" id="a-tv-min" /></div>
+        <div><label>TV mounting max</label><input type="number" id="a-tv-max" /></div>
+        <div><label>Water heater (fixed)</label><input type="number" id="a-heater" /></div>
+        <div><label>Lighting min</label><input type="number" id="a-light-min" /></div>
+        <div><label>Lighting max</label><input type="number" id="a-light-max" /></div>
+        <div><label>Artwork hanging min</label><input type="number" id="a-hang-min" /></div>
+        <div><label>Artwork hanging max</label><input type="number" id="a-hang-max" /></div>
+      </div>
+    </div>
+    <button class="save-btn" onclick="saveRates()">Save rates</button>
+    <span class="saved-msg" id="saved-msg">✅ Rates saved!</span>
+    <br><br>
+    <button onclick="closeAdmin()" style="background:none;border:none;color:#0F3D2E;font-size:13px;cursor:pointer;text-decoration:underline;">← Back to website</button>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/254735393874?text=Hi%20Trident%20Movers%2C%20I%27d%20like%20a%20quote%20for%20my%20move." target="_blank" class="whatsapp-float">
+  <svg width="22" height="22" viewBox="0 0 32 32" fill="none"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.492.649 4.831 1.785 6.865L2 30l7.34-1.763A13.94 13.94 0 0016 30c7.732 0 14-6.268 14-14S23.732 2 16 2z" fill="#fff" fill-opacity=".2"/><path d="M22 19.4c-.3-.15-1.82-.9-2.1-1-.28-.1-.49-.15-.69.15-.2.3-.8 1-.97 1.2-.18.2-.36.23-.67.08-.3-.15-1.3-.48-2.47-1.52-.91-.81-1.53-1.82-1.7-2.12-.18-.31-.02-.47.13-.63.14-.14.3-.36.46-.54.15-.18.2-.3.3-.51.1-.2.05-.38-.02-.54-.08-.15-.69-1.66-.95-2.28-.25-.6-.5-.52-.69-.53l-.59-.01c-.2 0-.54.08-.82.38-.28.31-1.07 1.05-1.07 2.56s1.1 2.97 1.25 3.18c.15.2 2.17 3.31 5.25 4.64.73.31 1.3.5 1.75.65.74.23 1.41.2 1.94.12.59-.09 1.82-.74 2.07-1.46.26-.72.26-1.33.18-1.46-.08-.13-.28-.2-.59-.36z" fill="#fff"/></svg>
+  Chat on WhatsApp
+</a>
+
+<script>
+// ─── NAVIGATION ──────────────────────────────────────────────
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-links button[id^="nav-"]').forEach(el=>el.classList.remove('active'));
+  const pg=document.getElementById('page-'+p);
+  if(pg){pg.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+  const nb=document.getElementById('nav-'+p);
+  if(nb)nb.classList.add('active');
+}
+
+// ─── RATES ───────────────────────────────────────────────────
+let R={
+  fuel:18,wage:600,floorSurch:500,noElevSurch:800,
+  hours:{studio:2,"1bed":3,"2bed":5,"3bed":7,"4bed":10,office:8},
+  special:{piano:[3000,6000],safe:[2000,4000],artwork:[1000,2500],gym:[1500,3000]},
+  tv:[500,1500],heater:400,light:[800,1500],hang:[200,500]
+};
+const qty={tv:0,heater:0,light:0,art:0};
+function changeQty(k,d){qty[k]=Math.max(0,qty[k]+d);document.getElementById('qty-'+k).textContent=qty[k];}
+
+// ─── QUOTE CALC ───────────────────────────────────────────────
+function calcQuote(){
+  const name=document.getElementById('f-name').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  const dist=parseFloat(document.getElementById('f-dist').value)||0;
+  const size=document.getElementById('f-size').value;
+  const pfloor=parseInt(document.getElementById('f-pfloor').value);
+  const dfloor=parseInt(document.getElementById('f-dfloor').value);
+  const elev=document.querySelector('input[name="elevator"]:checked').value;
+  const specials=[...document.querySelectorAll('.special:checked')].map(e=>e.value);
+  if(!name||!phone){alert('Please enter your name and phone number.');return;}
+  if(!dist){alert('Please enter an estimated distance in km.');return;}
+  const hrs=R.hours[size]||4;
+  const labMin=Math.round(hrs*R.wage*0.9),labMax=Math.round(hrs*R.wage*1.25);
+  const fuelMin=Math.round(dist*R.fuel*0.9),fuelMax=Math.round(dist*R.fuel*1.2);
+  const tf=pfloor+dfloor;
+  let floorMin=0,floorMax=0;
+  if(tf>0){floorMin=tf*R.floorSurch;floorMax=tf*R.floorSurch*1.2;if(elev==='no'){floorMin+=R.noElevSurch;floorMax+=R.noElevSurch*1.3;}}
+  let specMin=0,specMax=0;
+  const smap={piano:'piano',safe:'safe',artwork:'artwork',gym:'gym'};
+  specials.forEach(s=>{const k=smap[s];if(k&&R.special[k]){specMin+=R.special[k][0];specMax+=R.special[k][1];}});
+  const tvMin=qty.tv*R.tv[0],tvMax=qty.tv*R.tv[1];
+  const heatFlat=qty.heater*R.heater;
+  const lightMin=qty.light*R.light[0],lightMax=qty.light*R.light[1];
+  const hangMin=qty.art*R.hang[0],hangMax=qty.art*R.hang[1];
+  const addMin=tvMin+heatFlat+lightMin+hangMin,addMax=tvMax+heatFlat+lightMax+hangMax;
+  const totalMin=labMin+fuelMin+floorMin+specMin+addMin;
+  const totalMax=labMax+fuelMax+floorMax+specMax+addMax;
+  const lines=[['Labour',fmt(labMin),fmt(labMax)],['Fuel & transport',fmt(fuelMin),fmt(fuelMax)]];
+  if(floorMin>0)lines.push(['Floor / access surcharge',fmt(floorMin),fmt(floorMax)]);
+  if(specMin>0)lines.push(['Special items handling',fmt(specMin),fmt(specMax)]);
+  if(qty.tv>0)lines.push([`TV mounting (×${qty.tv})`,fmt(tvMin),fmt(tvMax)]);
+  if(qty.heater>0)lines.push([`Water heater (×${qty.heater})`,fmt(heatFlat),fmt(heatFlat)]);
+  if(qty.light>0)lines.push([`Lighting fixtures (×${qty.light})`,fmt(lightMin),fmt(lightMax)]);
+  if(qty.art>0)lines.push([`Artwork hanging (×${qty.art})`,fmt(hangMin),fmt(hangMax)]);
+  let html=lines.map(([l,mn,mx])=>`<div class="quote-line"><span>${l}</span><span>KSh ${mn} – ${mx}</span></div>`).join('');
+  html+=`<div class="quote-line total"><span>Total estimate</span><span>KSh ${fmt(totalMin)} – ${fmt(totalMax)}</span></div>`;
+  document.getElementById('quote-lines').innerHTML=html;
+  const box=document.getElementById('quote-result');
+  box.classList.add('show');
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+  const msg=encodeURIComponent(`Hi Trident Movers! 👋\n\nI just got a quote:\n\n👤 ${name}\n📞 ${phone}\n📍 From: ${document.getElementById('f-from').value||'TBD'}\n📍 To: ${document.getElementById('f-to').value||'TBD'}\n📅 Date: ${document.getElementById('f-date').value||'TBD'}\n🏠 Size: ${size}\n💰 Estimate: KSh ${fmt(totalMin)} – ${fmt(totalMax)}\n\nI'd like to confirm this booking.`);
+  const wb=document.getElementById('wa-confirm-btn');
+  wb.href=`https://wa.me/254735393874?text=${msg}`;
+  wb.style.display='flex';
+}
+function fmt(n){return Math.round(n).toLocaleString();}
+
+// ─── CONTACT FORM ─────────────────────────────────────────────
+function submitContact(){
+  const name=document.getElementById('c-name').value.trim();
+  const phone=document.getElementById('c-phone').value.trim();
+  const subject=document.getElementById('c-subject').value;
+  const message=document.getElementById('c-message').value.trim();
+  const msgEl=document.getElementById('contact-msg');
+  if(!name||!phone||!message){
+    msgEl.className='form-msg error';msgEl.style.display='block';
+    msgEl.textContent='Please fill in your name, phone and message.';return;
+  }
+  const wa=encodeURIComponent(`Hi Trident Movers! 👋\n\n*${subject}*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n\n${message}`);
+  window.open(`https://wa.me/254735393874?text=${wa}`,'_blank');
+  msgEl.className='form-msg success';msgEl.style.display='block';
+  msgEl.textContent='✅ Opening WhatsApp to send your message...';
+}
+
+// ─── ADMIN ────────────────────────────────────────────────────
+const ADMIN_PASS='Eloniz32831525#';
+function openAdmin(){document.getElementById('login-modal').classList.add('show');document.getElementById('admin-pass').value='';document.getElementById('login-err').style.display='none';}
+function checkLogin(){
+  if(document.getElementById('admin-pass').value===ADMIN_PASS){
+    document.getElementById('login-modal').classList.remove('show');
+    loadAdminFields();
+    document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+    document.getElementById('admin-panel').style.display='block';
+  }else{document.getElementById('login-err').style.display='block';}
+}
+function closeAdmin(){
+  document.getElementById('admin-panel').style.display='none';
+  showPage('home');
+}
+function loadAdminFields(){
+  const f=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v;};
+  f('a-fuel',R.fuel);f('a-wage',R.wage);f('a-floor',R.floorSurch);f('a-noelev',R.noElevSurch);
+  f('a-studio',R.hours.studio);f('a-1bed',R.hours['1bed']);f('a-2bed',R.hours['2bed']);
+  f('a-3bed',R.hours['3bed']);f('a-4bed',R.hours['4bed']);f('a-office',R.hours.office);
+  f('a-piano-min',R.special.piano[0]);f('a-piano-max',R.special.piano[1]);
+  f('a-safe-min',R.special.safe[0]);f('a-safe-max',R.special.safe[1]);
+  f('a-art-min',R.special.artwork[0]);f('a-art-max',R.special.artwork[1]);
+  f('a-gym-min',R.special.gym[0]);f('a-gym-max',R.special.gym[1]);
+  f('a-tv-min',R.tv[0]);f('a-tv-max',R.tv[1]);f('a-heater',R.heater);
+  f('a-light-min',R.light[0]);f('a-light-max',R.light[1]);
+  f('a-hang-min',R.hang[0]);f('a-hang-max',R.hang[1]);
+}
+function saveRates(){
+  const g=id=>+(document.getElementById(id)||{value:0}).value;
+  R.fuel=g('a-fuel');R.wage=g('a-wage');R.floorSurch=g('a-floor');R.noElevSurch=g('a-noelev');
+  R.hours={studio:g('a-studio'),'1bed':g('a-1bed'),'2bed':g('a-2bed'),'3bed':g('a-3bed'),'4bed':g('a-4bed'),office:g('a-office')};
+  R.special={piano:[g('a-piano-min'),g('a-piano-max')],safe:[g('a-safe-min'),g('a-safe-max')],artwork:[g('a-art-min'),g('a-art-max')],gym:[g('a-gym-min'),g('a-gym-max')]};
+  R.tv=[g('a-tv-min'),g('a-tv-max')];R.heater=g('a-heater');
+  R.light=[g('a-light-min'),g('a-light-max')];R.hang=[g('a-hang-min'),g('a-hang-max')];
+  const m=document.getElementById('saved-msg');m.style.display='inline';setTimeout(()=>m.style.display='none',2500);
+}
+</script>
+</body>
+</html>
